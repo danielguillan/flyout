@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Flyout demo</title>
+        <link rel="stylesheet" href="css/demo.css">
+        <script src="js/libs/modernizr.js"></script>
+    </head>
+
+    <body>
+
+        <div class="wrapper">
+
+            <!--
+            ==========================================================================
+            Flyout wrap
+            ==========================================================================
+            -->
+
+            <div class="flyout-wrap js-flyout-wrap">
+
+                <!--
+                ==========================================================================
+                Flyout links
+                ==========================================================================
+                -->
+
+                <nav class="main-nav split">
+                    <a href="#left-nav" class="btn split__left js-flyout-link" data-flyout-side="left">Toggle left flyout</a>
+                    <a href="#right-nav" class="btn js-flyout-link" data-flyout-side="right">Toggle right flyout</a>
+                </nav>
+
+                <!--
+                ==========================================================================
+                Main content
+                ==========================================================================
+                -->
+
+                <h1>Flyout demo</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quam sed assumenda velit consectetur voluptates saepe. Ab, numquam similique sapiente eveniet nesciunt architecto facilis consequuntur iste delectus doloribus fuga aspernatur!</p>
+                <h2>Fill Murray!</h2>
+                <p><img src="http://www.fillmurray.com/400/400" alt="Fill Murray!"></p>
+                <h2>Cats!</h2>
+                <p><img src="http://placekitten.com/400/400" alt="Cat!"></p>
+
+            </div>
+
+            <!--
+            ==========================================================================
+            Left flyout
+            ==========================================================================
+            -->
+
+            <div id="left-nav" class="flyout flyout--left">
+                <h3>Left Nav</h3>
+                <a href="#left-nav" class="btn btn--expand js-flyout-link" data-flyout-expand="true">Toggle expand</a></p>
+                <ul class="nav">
+                    <li class="nav__item"><a href="#">item1</a></li>
+                    <li class="nav__item"><a href="#">item2</a></li>
+                    <li class="nav__item"><a href="#">item3</a></li>
+                    <li class="nav__item"><a href="#">item4</a></li>
+                    <li class="nav__item"><a href="#">item5</a></li>
+                    <li class="nav__item"><a href="#">item6</a></li>
+                    <li class="nav__item"><a href="#">item7</a></li>
+                    <li class="nav__item"><a href="#">item8</a></li>
+                </ul>
+                <h4>Keep toggling!</h4>
+                <img src="http://24.media.tumblr.com/03bb15878227ee7138cd693084944b75/tumblr_mn9ikdCpdY1r2kb4qo1_400.gif" alt="hypnotoad">
+            </div>
+
+            <!--
+            ==========================================================================
+            Right flyout
+            ==========================================================================
+            -->
+
+            <div id="right-nav" class="flyout flyout--right">
+                <h3>Right Nav</h3>
+                <p><a href="#right-nav" class="btn btn--expand js-flyout-link" data-flyout-expand="true">Toggle expand</a></p>
+                <ul class="nav">
+                    <li class="nav__item"><a href="#">item1</a></li>
+                    <li class="nav__item"><a href="#">item2</a></li>
+                    <li class="nav__item"><a href="#">item3</a></li>
+                    <li class="nav__item"><a href="#">item4</a></li>
+                    <li class="nav__item"><a href="#">item5</a></li>
+                    <li class="nav__item"><a href="#">item6</a></li>
+                    <li class="nav__item"><a href="#">item7</a></li>
+                    <li class="nav__item"><a href="#">item8</a></li>
+                </ul>
+                <h4>Keep toggling!</h4>
+                <img src="http://24.media.tumblr.com/03bb15878227ee7138cd693084944b75/tumblr_mn9ikdCpdY1r2kb4qo1_400.gif" alt="hypnotoad">
+            </div>
+
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="js/libs/fastclick.js"></script>
+        <script>
+            window.addEventListener('load', function() {
+                FastClick.attach(document.body);
+            }, false);
+        </script>
+        <script src="../src/js/flyout.js"></script>
+
+    </body>
+
+</html>
