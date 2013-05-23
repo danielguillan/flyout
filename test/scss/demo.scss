@@ -1,0 +1,86 @@
+// =============================================================================
+// Flyout demo
+// =============================================================================
+
+// Import flyout partial
+// =============================================================================
+@import "../../src/scss/flyout";
+
+
+// Include mixin and pass some options
+// =============================================================================
+@include flyout(
+            $width: 260px,
+            $in-easing: cubic-bezier(0.085, 0.750, 0.345, 1.460),
+            $out-easing: cubic-bezier(0.480, -0.555, 0.165, 1.605)
+        );
+
+
+// =============================================================================
+// Quick & Dirty demo styling
+// =============================================================================
+
+* {
+    margin:  0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 { margin-top: 1em; margin-bottom: 1em; }
+
+body { font-family: 'Helvetica Neue', Arial, sans-serif; }
+img { max-width: 100%; }
+
+.wrapper { position: relative; }
+
+.btn {
+    display: inline-block;
+    padding: .25em .45em;
+    border: solid 1px #ccc;
+    border-radius: 6px;
+    color: #444;
+    text-decoration: none;
+    background-color: #f1f1f1;
+    background-image: linear-gradient(#fff, #f1f1f1);
+}
+
+.btn--expand {
+    margin: 1em;
+}
+
+.flyout { background-color: #f1f1f1; }
+
+.flyout-wrap { padding: 1em; background-color: #fff; }
+
+.split {
+    text-align: right;
+    .split__left { float: left; }
+}
+
+.main-nav {
+    padding: 0 .25em 1em;
+    border-bottom: solid 1px #ccc;
+    background-color: #fff;
+}
+
+.nav {
+    list-style: none;
+    border-top: solid 1px #ccc;
+}
+
+.nav__item {
+    a {
+        display: block;
+        padding: 1em 1em;
+        color: #444;
+        text-decoration: none;
+        border-bottom: solid 1px #ccc;
+    }
+}

@@ -1,0 +1,193 @@
+// =============================================================================
+// Flyout
+// Off-canvas flyout navigation
+//
+// Table of contents:
+// 1. Mixins
+// 2. Flyout
+// 3. Wrap
+//
+// =============================================================================
+
+// =============================================================================
+// 1. Mixins
+// =============================================================================
+
+@mixin flyout-translate3d($x:0, $y:0, $z:0) {
+    -webkit-transform: translate3d($x, $y, $z);
+    transform: translate3d($x, $y, $z);
+}
+
+@mixin flyout-transition($shorthand) {
+    -webkit-transition: $shorthand;
+    transition: $shorthand;
+}
+
+@mixin flyout(
+    $width: 80%,
+    $animate: true,
+    $in-duration: .3s,
+    $in-easing: ease-in-out,
+    $out-duration: .65s,
+    $out-easing: ease-in-out
+    ) {
+
+
+    // =============================================================================
+    // 2. Flyout
+    //
+    // If JS available
+    // [1] Set width
+    // [2] Make it full height
+    //
+    // If browser doesn't support overflow-scrolling
+    // [3] Position absolutely
+
+    // If browser supports overflow-scrolling
+    // [4] Fix position at the top of the screen/container
+    // [5] Place it under the main content (flyout-wrap)
+    // [6] Make it full height
+    // [7] Add touch overflow scrolling
+    // [8] Show / Hide (normal and hardware accelerated)
+    //
+    // =============================================================================
+
+    .flyout {
+
+        .js & {
+            width: $width;                                      // [1]
+            top: 0;                                             // [2]
+            bottom: 0;                                          // [2]
+        }
+
+        .no-overflowscrolling & {
+            position: absolute;                                 // [3]
+        }
+
+        .overflowscrolling & {
+            position: fixed;                                    // [3]
+            z-index: 10;                                        // [5]
+            height: 100%;                                       // [6]
+            -webkit-overflow-scrolling: touch;                  // [7]
+            overflow-scrolling: touch;                          // [7]
+            overflow: auto;                                     // [7]
+
+        }
+
+        .no-csstransforms3d & {
+            display: none;                                      // [8]
+            &.is-active { display: block; }                     // [8]
+        }
+
+        .csstransforms3d & {
+            @include flyout-translate3d(-100000px,0,0);         // [8]
+            &.is-active { @include flyout-translate3d(0,0,0); } // [8]
+        }
+
+        .active-flyout--expand & {
+            width: 100% !important;
+        }
+    }
+
+    .flyout--left {
+        left: 0;
+    }
+
+    .flyout--right {
+        right: 0;
+    }
+
+
+
+    // =============================================================================
+    // 3. Wrap
+    // Main container. Moves off-canvas when JS is available.
+    //
+    // If CSS 3D transforms are available
+    // [1] Prevent translate3d flickering
+    // [2] Off-canvas transition in and out
+    // [3] Show left flyout moving the wrap to the right
+    // [4] Show right flyout moving the wrap to the left
+    //
+    // If CSS 3d transforms aren't available don't use transitions because left/right
+    // positioning has poor performance
+    // [5] Show left flyout moving the wrap to the right
+    // [6] Show right flyout moving the wrap to the left
+    // [7] Lock horizontal scrolling. @todo: Should only be triggered when flyout
+    //     is active but for some reason, after closing there's empty space remaining
+    //     to the right of the content
+    //
+    // =============================================================================
+
+    .flyout-wrap {
+        position: relative;
+        z-index: 20;
+
+        // Transitions
+        // =============================================================================
+        @if $animate == true {
+            .csstransforms3d & {
+
+                -webkit-backface-visibility: hidden;                            // [1]
+                -moz-backface-visibility:    hidden;                            // [1]
+                -ms-backface-visibility:     hidden;                            // [1]
+
+                @include flyout-transition(all $in-duration $in-easing);        // [2]
+
+                .csstransforms3d.active-flyout {
+                    @include flyout-transition(all $out-duration $out-easing);  // [2]
+                }
+            }
+        }
+
+
+        // Translate 3D positioning
+        // =============================================================================
+
+        .csstransforms3d.active-flyout--left &   {
+            @include flyout-translate3d($width,0,0);                            // [3]
+        }
+
+        // I'm ashamed for writing this selector. @todo: simplify?
+        .csstransforms3d.active-flyout--left.active-flyout--expand & {
+            @include flyout-translate3d(100%,0,0);                              // [3]
+        }
+
+        .csstransforms3d.active-flyout--right &  {
+            @include flyout-translate3d(-$width,0,0);                           // [4]
+        }
+
+        // I'm ashamed for writing this selector. @todo: simplify?
+        .csstransforms3d.active-flyout--right.active-flyout--expand & {
+            @include flyout-translate3d(-100%,0,0);                             // [4]
+        }
+
+        // Normal Positioning
+        // =============================================================================
+
+        .no-csstransforms3d.active-flyout--left &   {
+            left: $width;                                                       // [5]
+        }
+
+        // I'm ashamed for writing this selector. @todo: simplify?
+        .no-csstransforms3d.active-flyout--left.active-flyout--expand & {
+            left: 100%;                                                         // [5]
+        }
+
+        .no-csstransforms3d.active-flyout--right &   {
+            right: $width;                                                      // [6]
+        }
+
+        // I'm ashamed for writing this selector. @todo: simplify?
+        .no-csstransforms3d.active-flyout--right.active-flyout--expand & {
+            right: 100%;                                                        // [6]
+        }
+    }
+
+    .html,
+    .active-flyout {
+        overflow-x: hidden;                                                     // [7]
+        width: 100%;                                                            // [7]
+    }
+
+}
