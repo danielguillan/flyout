@@ -34,55 +34,73 @@
 
     // =============================================================================
     // 2. Flyout
-    //
-    // If JS available
-    // [1] Set width
-    // [2] Make it full height
-    //
-    // If browser doesn't support overflow-scrolling
-    // [3] Position absolutely
-
-    // If browser supports overflow-scrolling
-    // [4] Fix position at the top of the screen/container
-    // [5] Place it under the main content (flyout-wrap)
-    // [6] Make it full height
-    // [7] Add touch overflow scrolling
-    // [8] Show / Hide (normal and hardware accelerated)
-    //
     // =============================================================================
 
     .flyout {
 
+        // If JS available
+        //   [1] Position at the top of the screen/container
+        //   [2] Move it under the main content (flyout-wrap)
+        //   [3] Set width
         .js & {
-            width: $width;                                      // [1]
-            top: 0;                                             // [2]
-            bottom: 0;                                          // [2]
+            top: 0;                                             // [1]
+            z-index: 10;                                        // [2]
+            width: $width;                                      // [3]
         }
 
-        .no-overflowscrolling & {
-            position: absolute;                                 // [3]
-        }
-
+        // If Browser supports overflow-scrolling
+        //   [1] Fix position
+        //   [2] Make it full height
+        //   [3] Touch overflow scrolling
         .overflowscrolling & {
-            position: fixed;                                    // [3]
-            z-index: 10;                                        // [5]
-            height: 100%;                                       // [6]
-            -webkit-overflow-scrolling: touch;                  // [7]
-            overflow-scrolling: touch;                          // [7]
-            overflow: auto;                                     // [7]
-
+            position: fixed;                   // [1]
+            height: 100%;                      // [2]
+            bottom: 0;                         // [2]
+            -webkit-overflow-scrolling: touch; // [3]
+            overflow-scrolling: touch;         // [3]
+            overflow: scroll;                  // [3]
         }
 
+        // If Browser doesn't support overflowscrolling but supports overflow auto
+        // This rule tries to exclude Android Browser 2.x that doesn't support overflow:auto
+        // but unfortunately it also excludes more capable touch-enabled browsers :(
+        //   [1] Fix position
+        //   [2] Make it full height
+        //   [3] Touch overflow scrolling
+        .no-touch.no-overflowscrolling & {
+            position: fixed; // [1]
+            bottom: 0;       // [2]
+            overflow: auto;  // [3]
+        }
+
+        // If Browser doesn't support overflows-crolling but supports touch
+        // This rule is targeted at Android Browser 2.x that doesn't support overflow:auto
+        // but unfortunately it also applies to more capable touch-enabled browsers :(
+        //   [1] Position absolutely
+        //   [2] Make it full height
+        .touch.no-overflowscrolling & {
+            position: absolute; // [1]
+            bottom: 0;          // [2]
+        }
+
+
+        // If Browser doesn't support 3D transforms
+        //   [1] Hide using display:none
+        //   [2] Show when .is-active
         .no-csstransforms3d & {
-            display: none;                                      // [8]
-            &.is-active { display: block; }                     // [8]
+            display: none;                                      // [1]
+            &.is-active { display: block; }                     // [2]
         }
 
+        // If Browser supports 3D transforms
+        //   [1] Hide using translate 3D (hw accelerated, better performance than display:none)
+        //   [2] Show when .is-active
         .csstransforms3d & {
             @include flyout-translate3d(-100000px,0,0);         // [8]
             &.is-active { @include flyout-translate3d(0,0,0); } // [8]
         }
 
+        // When expand is set force 100% width
         .active-flyout--expand & {
             width: 100% !important;
         }
@@ -100,34 +118,29 @@
     // =============================================================================
     // 3. Wrap
     // Main content wrapper
-    //
-    // If CSS 3D transforms are available
-    // [1] Prevent translate3d flickering
-    // [2] Off-canvas transition in and out
-    // [3] Show left flyout moving the wrap to the right
-    // [4] Show right flyout moving the wrap to the left
-    //
-    // If CSS 3d transforms aren't available don't use transitions because left/right
-    // positioning has poor performance
-    // [5] Show left flyout moving the wrap to the right
-    // [6] Show right flyout moving the wrap to the left
-    // [7] Lock horizontal scrolling. @todo: Should only be triggered when flyout
-    //     is active but for some reason, after closing there's empty space remaining
-    //     to the right of the content
-    //
-    // @todo: simplify .expand selectors
-    //
     // =============================================================================
 
     .flyout-wrap {
         position: relative;
         z-index: 20;
 
+        .active-flyout.overflowscrolling &,
+        .active-flyout.no-touch & {
+            position: fixed;
+            height: 100%;
+        }
+
 
         // Transitions
         // =============================================================================
 
         @if $animate == true {
+
+            // If CSS 3D transforms are available
+            // If CSS 3D transforms aren't available don't use transitions because left/right
+            // positioning have poor performance
+            //   [1] Prevent translate3d flickering
+            //   [2] Off-canvas transition in and out
             .csstransforms3d & {
 
                 -webkit-backface-visibility: hidden;                            // [1]
@@ -142,50 +155,58 @@
             }
         }
 
-
-        // Translate 3D positioning
+        // Positioning
         // =============================================================================
 
+        // Translate 3D positioning
+        //   [1] Show left flyout moving the wrap to the right
+        //   [2] Show right flyout moving the wrap to the left
+
         .csstransforms3d.active-flyout--left &   {
-            @include flyout-translate3d($width, 0, 0);                          // [3]
+            @include flyout-translate3d($width, 0, 0);                          // [1]
         }
 
         .csstransforms3d.active-flyout--left.active-flyout--expand & {
-            @include flyout-translate3d(100%, 0, 0);                            // [3]
+            @include flyout-translate3d(100%, 0, 0);                            // [1]
         }
 
         .csstransforms3d.active-flyout--right &  {
-            @include flyout-translate3d(-$width, 0, 0);                         // [4]
+            @include flyout-translate3d(-$width, 0, 0);                         // [2]
         }
 
         .csstransforms3d.active-flyout--right.active-flyout--expand & {
-            @include flyout-translate3d(-100%, 0, 0);                           // [4]
+            @include flyout-translate3d(-100%, 0, 0);                           // [2]
         }
 
         // Normal Positioning
-        // =============================================================================
+        //   [1] Show left flyout moving the wrap to the right
+        //   [2] Show right flyout moving the wrap to the left
 
         .no-csstransforms3d.active-flyout--left &   {
-            left: $width;                                                       // [5]
+            left: $width;                                                       // [1]
         }
 
         .no-csstransforms3d.active-flyout--left.active-flyout--expand & {
-            left: 100%;                                                         // [5]
+            left: 100%;                                                         // [1]
         }
 
         .no-csstransforms3d.active-flyout--right &   {
-            right: $width;                                                      // [6]
+            right: $width;                                                      // [2]
         }
 
         .no-csstransforms3d.active-flyout--right.active-flyout--expand & {
-            right: 100%;                                                        // [6]
+            right: 100%;                                                        // [2]
         }
     }
 
+
+    // Lock horizontal scrolling. @todo: Should only be triggered when flyout
+    // is active but for some reason, after closing there's empty space remaining
+    // to the right of the content
     .html,
     .active-flyout {
-        overflow-x: hidden;                                                     // [7]
-        width: 100%;                                                            // [7]
+        overflow-x: hidden;
+        width: 100%;
     }
 
 }
