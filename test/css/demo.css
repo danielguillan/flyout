@@ -1,16 +1,21 @@
 .js .flyout {
-  width: 260px;
   top: 0;
-  bottom: 0; }
-.no-overflowscrolling .flyout {
-  position: absolute; }
+  z-index: 10;
+  width: 260px; }
 .overflowscrolling .flyout {
   position: fixed;
-  z-index: 10;
   height: 100%;
+  bottom: 0;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  overflow: scroll; }
+.no-touch.no-overflowscrolling .flyout {
+  position: fixed;
+  bottom: 0;
   overflow: auto; }
+.touch.no-overflowscrolling .flyout {
+  position: absolute;
+  bottom: 0; }
 .no-csstransforms3d .flyout {
   display: none; }
   .no-csstransforms3d .flyout.is-active {
@@ -33,6 +38,9 @@
 .flyout-wrap {
   position: relative;
   z-index: 20; }
+  .active-flyout.overflowscrolling .flyout-wrap, .active-flyout.no-touch .flyout-wrap {
+    position: fixed;
+    height: 100%; }
   .csstransforms3d .flyout-wrap {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
