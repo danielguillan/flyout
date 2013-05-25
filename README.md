@@ -17,5 +17,4 @@ demo: http://danielguillan.github.io/flyout/test/
 ## To-Do
 - Browser testing
 - Transitions in FF and Opera
-- Lock main wrap (overflow-y) when off-canvas navigation is visible
 - Better JS: vanilla JS? jQuery/Zepto plugin? Both?
