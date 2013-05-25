@@ -15,7 +15,7 @@
 
 @mixin flyout-translate3d($x:0, $y:0, $z:0) {
     -webkit-transform: translate3d($x, $y, $z);
-    transform: translate3d($x, $y, $z);
+            transform: translate3d($x, $y, $z);
 }
 
 @mixin flyout-transition($shorthand) {
@@ -31,7 +31,6 @@
     $out-duration: .65s,
     $out-easing: ease-in-out
     ) {
-
 
     // =============================================================================
     // 2. Flyout
@@ -98,10 +97,9 @@
     }
 
 
-
     // =============================================================================
     // 3. Wrap
-    // Main container. Moves off-canvas when JS is available.
+    // Main content wrapper
     //
     // If CSS 3D transforms are available
     // [1] Prevent translate3d flickering
@@ -117,20 +115,24 @@
     //     is active but for some reason, after closing there's empty space remaining
     //     to the right of the content
     //
+    // @todo: simplify .expand selectors
+    //
     // =============================================================================
 
     .flyout-wrap {
         position: relative;
         z-index: 20;
 
+
         // Transitions
         // =============================================================================
+
         @if $animate == true {
             .csstransforms3d & {
 
                 -webkit-backface-visibility: hidden;                            // [1]
-                -moz-backface-visibility:    hidden;                            // [1]
-                -ms-backface-visibility:     hidden;                            // [1]
+                   -moz-backface-visibility: hidden;                            // [1]
+                    -ms-backface-visibility: hidden;                            // [1]
 
                 @include flyout-transition(all $in-duration $in-easing);        // [2]
 
@@ -145,21 +147,19 @@
         // =============================================================================
 
         .csstransforms3d.active-flyout--left &   {
-            @include flyout-translate3d($width,0,0);                            // [3]
+            @include flyout-translate3d($width, 0, 0);                          // [3]
         }
 
-        // I'm ashamed for writing this selector. @todo: simplify?
         .csstransforms3d.active-flyout--left.active-flyout--expand & {
-            @include flyout-translate3d(100%,0,0);                              // [3]
+            @include flyout-translate3d(100%, 0, 0);                            // [3]
         }
 
         .csstransforms3d.active-flyout--right &  {
-            @include flyout-translate3d(-$width,0,0);                           // [4]
+            @include flyout-translate3d(-$width, 0, 0);                         // [4]
         }
 
-        // I'm ashamed for writing this selector. @todo: simplify?
         .csstransforms3d.active-flyout--right.active-flyout--expand & {
-            @include flyout-translate3d(-100%,0,0);                             // [4]
+            @include flyout-translate3d(-100%, 0, 0);                           // [4]
         }
 
         // Normal Positioning
@@ -169,7 +169,6 @@
             left: $width;                                                       // [5]
         }
 
-        // I'm ashamed for writing this selector. @todo: simplify?
         .no-csstransforms3d.active-flyout--left.active-flyout--expand & {
             left: 100%;                                                         // [5]
         }
@@ -178,7 +177,6 @@
             right: $width;                                                      // [6]
         }
 
-        // I'm ashamed for writing this selector. @todo: simplify?
         .no-csstransforms3d.active-flyout--right.active-flyout--expand & {
             right: 100%;                                                        // [6]
         }
