@@ -41,9 +41,8 @@
                 <h1>Flyout demo</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quam sed assumenda velit consectetur voluptates saepe. Ab, numquam similique sapiente eveniet nesciunt architecto facilis consequuntur iste delectus doloribus fuga aspernatur!</p>
                 <h2>Fill Murray!</h2>
+                <p><img src="http://www.fillmurray.com/600/400" alt="Fill Murray!"></p>
                 <p><img src="http://www.fillmurray.com/400/400" alt="Fill Murray!"></p>
-                <h2>Cats!</h2>
-                <p><img src="http://placekitten.com/400/400" alt="Cat!"></p>
 
             </div>
 
@@ -97,12 +96,13 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="js/libs/fastclick.js"></script>
-        <script>
-            window.addEventListener('load', function() {
-                FastClick.attach(document.body);
-            }, false);
-        </script>
         <script src="js/flyout.js"></script>
+        <script>
+            $(function() {
+                FastClick.attach(document.body);
+                var nav = $.flyout();
+            });
+        </script>
 
     </body>
 
