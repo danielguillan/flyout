@@ -11,11 +11,10 @@ demo: http://danielguillan.github.io/flyout/test/
 - High Performance and smooth animation.
 
 ## Dependencies
-- Modernizr (for JS, css3dtransforms and overflow-scrolling detection)
+- Modernizr (for JS, css3dtransforms and overflow-scrolling tests)
 - jQuery
 
 ## To-Do
-- Browser testing
 - Transitions in FF and Opera
 - Fix transition bugs
-- Better JS: vanilla JS? jQuery/Zepto plugin? Both?
+- Improved jQuery plugin
