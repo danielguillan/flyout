@@ -1,14 +1,16 @@
 # Flyout
 
-Work in progress…
+A robust, cross-browser left/right off-canvas navigation system built with Sass and jQuery. Flyout is mostly CSS-based and uses as little Javascript as possible. Flyout is lightweight: under 1kb gzipped.
 
-demo: http://danielguillan.github.io/flyout/test/
+__Demo: http://danielguillan.github.io/flyout/test/__
+
+_Flyout is a work in progress…_
 
 ## Goals
 - Flexibility: left and right off-canvas navigation, no content or layout assumptions/requirements.
 - Crossbrowser: all modern desktop and mobile browsers, IE8+, Android Browser 2.3, Opera Mobile.
-- As little JS as possible. JS API: open(side), expand(side), close().
-- High Performance and smooth animation.
+- Lightweight: under 1kb CSS+JS. As little JS as possible.
+- High Performance and smooth animations.
 
 ## Dependencies
 - Modernizr (for JS, css3dtransforms and overflow-scrolling tests)
