@@ -1,6 +1,6 @@
-;(function($,window) {
+(function($, undefined) {
 
-    "use strict";
+    'use strict';
 
     function Flyout() {
 
@@ -18,7 +18,9 @@
             },
 
             close: function() {
-                if (flyout.isExpanded) flyout.collapse();
+                if (flyout.isExpanded) {
+                    flyout.collapse();
+                }
                 $('body, html').removeClass('active-flyout active-flyout--left active-flyout--right');
                 flyout.nav.removeClass('is-active');
                 flyout.isOpen = false;
@@ -66,8 +68,8 @@
             expand: flyout.expand,
             collapse: flyout.collapse
         };
-    };
+    }
 
-    window.Flyout = Flyout();
+    window.Flyout = new Flyout();
 
-}(jQuery, this));
+})(window.jQuery);

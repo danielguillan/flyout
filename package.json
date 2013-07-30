@@ -1,0 +1,33 @@
+{
+  "name": "flyout",
+  "title": "Flyout",
+  "description": "A robust, cross-browser left/right off-canvas navigation system built with Sass and jQuery.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/danielguillan/flyout",
+  "keywords": [
+    "touch",
+    "gestures",
+    "ender"
+  ],
+  "author": {
+    "name": "Daniel Guillan",
+    "email": "daniel.guillan@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danielguillan/flyout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/danielguillan/flyout/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "0.3.x",
+    "grunt-contrib-uglify": "0.1.x",
+    "grunt-contrib-jshint": "0.1.x",
+    "grunt-contrib-watch": "0.2.x",
+    "grunt-contrib-sass": "~0.4.1",
+    "grunt-tagrelease": "0.1.x"
+  }
+}
